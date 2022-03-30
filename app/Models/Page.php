@@ -39,12 +39,12 @@ class Page extends Model
     
     public function Parents(): HasMany /* Refrencing own class for parents */
     {
-        return $this->hasMany(page::class);
+        return $this->hasMany(Page::class,'page_id');
     }
 
     public function Children(): BelongsTo /* Refrencing own class for children */
     {
-        return $this->belongsTo(page::class,'page_id');
+        return $this->belongsTo(Page::class,'page_id');
     }
 
     public function metaPage(): HasMany

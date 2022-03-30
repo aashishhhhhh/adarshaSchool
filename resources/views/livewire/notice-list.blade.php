@@ -98,18 +98,22 @@
                   <th>S.N</th>
                   <th>Title</th>
                   <th>Date</th>
+                  <th>File</th>
                   <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
                    @foreach ($noticeChild as $key=> $item)
                    @php
-                       $data=json_decode($item->content);
+                       $data=json_decode($item->content,true);
+                       $date=$data[0]['date'];
                    @endphp
                   <tr>
                   <td>{{$key+1}}</td>
                   <td>{{$item->title}}</td>
-                  <td>{{$data->date}}</td>
+                  <td>{{$date}}</td>
+                  <td> <a class="btn btn-primary" href="{{ asset('storage/upload/' . $data['RealFile']) }}" target="_blank"> Show File </a>
+                   </td>
                       <td>
                           <a href="{{route('notices-edit',$item->id)}}"  class="btn btn-primary"><i class="fas fa-edit"></i>Edit</a>
                           <a href="{{route('notices-delete',$item->id)}}"  class="btn btn-primary" ><i class="fas fa-trash-alt"></i>Delete</a> 

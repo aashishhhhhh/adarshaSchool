@@ -1,5 +1,5 @@
 <?php
 
 return[
-    'test'=>'test result'
+    'path'=>'public/upload/'
 ];

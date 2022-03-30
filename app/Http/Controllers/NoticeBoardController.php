@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helper\MediaHelper;
 use App\Models\Page;
 use App\Models\PageType;
 use Illuminate\Http\Request;
@@ -28,6 +29,8 @@ class NoticeBoardController extends Controller
         $data=$request->validate([
             'notice'=>'required'
         ]);
+
+        
         $page = page::create( [
             'page_type_id' => $this->pageType->id,
             'slug'=>Str::slug($request->notice),
@@ -57,21 +60,35 @@ class NoticeBoardController extends Controller
       return view('notice.notice-add',compact('notice'));
     }
 
-    public function noticesStore(Request $request)
+    public function noticesStore(Request $request,MediaHelper $mediaHelper)
     {
         $data= $request->validate([
             'title'=>'required',
             'date'=>'required',
-            'notice'=>'required'
+            'notice'=>'required',
+            'file'=>'sometimes'
         ]);
-        $id=Page::create([
-            'title'=>$request->title,
-            'slug'=>Str::slug($request->title),
-            'content'=>json_encode($request->except(['_token','noticeId'])),
-            'page_id'=>$request->noticeId,  
-            'page_type_id'=>null,
-            'show_on_home'=>1
-        ]);
+        if ($request->hasFile('file')) {
+            if ($request->file->getClientOriginalExtension()=='pdf') {
+                $orginalName = Str::before($request->file->getClientOriginalName(), '.');
+                $fileName =  $orginalName . "-" . Str::random(10) . "." . $request->file->extension();
+                $filePath = storage_path() . '/app/public/upload/';
+                $request->file->storeAs('upload', $fileName, 'public');
+            }
+            else{
+                $fileName=$mediaHelper->uploadSingleImage($request->file);
+            }
+           json_encode([$request->except('_token'),'RealFile'=>$fileName]);
+           $id= Page::create([
+                'slug'=>Str::slug($request->title),
+                'title'=>$request->title,
+                'page_id'=>$request->noticeId,  
+                'content'=>json_encode([$request->except(['_token','noticeId']),'RealFile'=>$fileName]),
+                'page_type_id'=>null,
+                'show_on_home'=>1
+            ]);
+         }
+       
         return redirect()->route('notice.index')->with('msg','Notice Added successfully');
     }
 

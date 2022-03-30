@@ -10,20 +10,16 @@
         </button>
       </div>
       @endif
-      @if ($message!=null)
-      @php
-          $data=json_decode($message->content,True);
-      @endphp
-      @endif
+    
     <div class="card">
         <div class="card-header">
             <div class="row my-1">
                 <div class="col-md-6" style="margin-bottom:-5px;">
-                    <p class="">{{ __('Message') }}</p>
+                    <p class="">{{ __('Alumni') }}</p>
                 </div>
                 <div class="col-md-6 text-right">
-                    <a href="{{route('message.create')}}"
-                        class="btn btn-sm btn-primary">{{ __('Add Message') }}
+                    <a href="#"
+                        class="btn btn-sm btn-primary">{{ __('Add Alumni') }}
                         <i class="fas fa-plus px-1"></i></a>
                 </div>
             </div>
@@ -38,38 +34,12 @@
         <table class="table table-head-fixed text-nowrap">
         <thead>
         <tr>
-        <th>ID</th>
-        <th>Principle's Name</th>
-        <th>Photo</th>
-        <th>Message</th>
-        <th>Action</th>
+      
         </tr>
         </thead>
         <tbody>
         <tr>
-            @if ($message!=null)
-         <td>1</td>
-         <td>{{$data['name']}}</td>
-        <td>
-          @foreach ($message->pictures as $picture)
-          <a
-          href="{{ asset('storage/upload/' . $picture->url) }}" target="_blank">
-          <img src="{{ asset('storage/thumbnails/' . $picture->url) }}" alt=""
-              class="px-1" width="100">
-      </a>
-      @endforeach
-    </td>
-        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable">
-            show message
-          </button></td>
-        <form action="{{ route('message.destroy',$message) }}" method="POST" class="d-none">
-            @method('DELETE')
-            @csrf
-            <td>
-                <button type="submit" class="btn btn-primary" ><i class="fas fa-trash-alt"></i>Delete</button> 
-                <a href="{{route('message.edit',$message)}}" class="btn btn-primary"><i class="fas fa-edit"></i> Edit </a> </td>
-        </form>
-        @endif
+          
 
         </tr>
         </tbody>
@@ -91,12 +61,7 @@
           </button>
         </div>
         <div class="modal-body">
-            @if ($message!=null)
-                @php
-                    $data=json_decode($message->content,True);
-                @endphp
-          {{$data['message']}}
-          @endif
+          
 
         </div>
         <div class="modal-footer">

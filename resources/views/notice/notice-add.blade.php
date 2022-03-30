@@ -13,6 +13,10 @@
             <label for="exampleInputEmail1"> Heading</label>
             <input type="text" name="title" class="form-control" id="exampleInputEmail1" placeholder="Enter Notice Heading">
             </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1"> File</label>
+                <input type="file" name="file" class="form-control">
+                </div>
         <div class="form-group">
             <label for="exampleInputFile"> Nepali Date</label>
             <div class="form-group">
@@ -20,6 +24,10 @@
                 <input type="hidden" name="noticeId" value="{{$notice->id}}">
             </div>
         </div>
+
+    
+
+        
    <label for="exampleInputEmail1">Notice</label>
     <div class="form-group">
         <textarea class="ckeditor form-control" name="notice" name="wysiwyg-editor" required></textarea>

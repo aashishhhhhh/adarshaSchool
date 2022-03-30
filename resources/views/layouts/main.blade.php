@@ -169,6 +169,12 @@
                                Gallery
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{route('students.index')}}" class="nav-link @yield('is_active_students')">
+                                <i class="fas fa-photo-video"></i>
+                               Alumni
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

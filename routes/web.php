@@ -6,12 +6,14 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DownloadsController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NoticeBoardController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PageTypeController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\StudentsController;
 use App\Models\AboutUs;
 use App\Models\Page;
 use Illuminate\Support\Facades\Route;
@@ -65,6 +67,13 @@ Route::group(['middleware'=>'auth'],function(){
     Route::resource('gallery',GalleryController::class)->only(['index','create','store','update','edit','destroy']);
     Route::get('showPhotos/{gallery}',[GalleryController::class,'showPhotos'])->name('showPhotos');
     Route::get('galleryDestroy/{gallery}',[GalleryController::class,'galleryDestroy'])->name('gallery-delete');
+    Route::resource('students',StudentsController::class)->only(['index','create','store','update','edit','destroy']);
 
 });
+
+///Frontend Routes
+
+Route::get('/home',[HomeController::class,'home'])->name('home');
+Route::get('/generalNotice/{slug}',[HomeController::class,'generalNotice'])->name('general.notice');
+Route::get('downloadFile/{link}',[HomeController::class,'downloadFile'])->name('downloadFile');
 
