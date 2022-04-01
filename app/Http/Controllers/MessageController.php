@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 
 class MessageController extends Controller
 {
-   public $slug='home';
+   public $slug='message';
    public $pageType;
 
     public function __construct()
@@ -53,7 +53,7 @@ class MessageController extends Controller
                 'slug'=>Str::slug($request->title),
                 'title'=>$request->title,
                 'content'=>json_encode($request->except('_token')),
-                'page_type_id'=>$this->pageType->id,
+                'page_type_id'=>null,
                 'show_on_home'=>1
             ]);
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DownloadsController;
 use App\Http\Controllers\FacultyController;
+use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MessageController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\PageTypeController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Livewire\Gallery;
 use App\Models\AboutUs;
 use App\Models\Page;
 use Illuminate\Support\Facades\Route;
@@ -29,15 +31,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/login', function () {
     return view('auth.login');
 });
+
 Route::get('test',[PageController::class,'test']);
 Route::post('submit',[PageController::class,'submit'])->name('test.create');
 
+
+Route::get('/',[FrontendController::class,'home'])->name('welcome');
+Route::get('/generalNotice/{slug}',[FrontendController::class,'generalNotice'])->name('general.notice');
+Route::get('downloadFile/{link}',[FrontendController::class,'downloadFile'])->name('downloadFile');
+Route::get('/{slug}', [FrontendController::class, 'getFromSlug'])->name('slug');
+Route::get('program/{slug}',[FrontendController::class,'getFromProgramSlug'])->name('program.slug');
+Route::get('subgallery/{slug}',[FrontendController::class,'subGallery'])->name('sub-gallery');
+Route::post('feedback',[FrontendController::class,'feedback'])->name('feedback');
+Route::get('singlenotice/{slug}',[FrontendController::class,'singleNotice'])->name('single-notice');
+
 Auth::routes(['register'=>false]);
 Route::group(['middleware'=>'auth'],function(){
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::prefix('admin')->group(function () {
+    Route::get('/adminHome', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('page-type', PageTypeController::class)->except(['edit']);
     Route::resource('page', PageController::class)->only(['index','create','store','update','edit','destroy']);
     Route::resource('sliders', SliderController::class)->only(['index','create','store','update','edit','destroy']);
@@ -65,15 +79,16 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('resultDestory/{result}',[ResultController::class,'resultDestroy'])->name('resultt.destroy');
     Route::resource('download',DownloadsController::class)->only(['index','create','store','update','edit','destroy']);
     Route::resource('gallery',GalleryController::class)->only(['index','create','store','update','edit','destroy']);
-    Route::get('showPhotos/{gallery}',[GalleryController::class,'showPhotos'])->name('showPhotos');
+    Route::get('albumCreate/{album}',[GalleryController::class,'albumCreate'])->name('albumCreate');
+    Route::get('albutEdit/{album}',[GalleryController::class,'albumEdit'])->name('album-edit');
+    Route::get('album-delete/{album}',[GalleryController::class,'albumDelete'])->name('album-delete');
+    Route::get('showPhotos/{album}',[GalleryController::class,'showPhotos'])->name('showPhotos');
     Route::get('galleryDestroy/{gallery}',[GalleryController::class,'galleryDestroy'])->name('gallery-delete');
     Route::resource('students',StudentsController::class)->only(['index','create','store','update','edit','destroy']);
-
 });
+});
+
 
 ///Frontend Routes
 
-Route::get('/home',[HomeController::class,'home'])->name('home');
-Route::get('/generalNotice/{slug}',[HomeController::class,'generalNotice'])->name('general.notice');
-Route::get('downloadFile/{link}',[HomeController::class,'downloadFile'])->name('downloadFile');
 

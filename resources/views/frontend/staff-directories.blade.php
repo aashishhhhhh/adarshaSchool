@@ -3,7 +3,14 @@
    @include('frontend.layout.navigation')
 <main class="container">
     <div class="main-body">
+        @php
+        
 
+           $content=json_decode($program->content);
+          
+
+        
+        @endphp
       <!-- section two -->
       <section id="page">
         <div class="container">
@@ -12,41 +19,36 @@
             <div class="col-md-8">
               <div class="left-box">
                   <div class="page">
-                      <h4 class="page-title"> General </h4>
+                      <h4 class="page-title"> {{isset($program->title) ? $program->title : ''}} </h4>
                       <div class="page-body">
-                          {{-- <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis cumque earum omnis? Consectetur, asperiores ducimus.</p>   --}}
-
+                          <p> {!!$content->content!!}</p>
                           <table class="table mt-5">
-                            <thead class="bg text-light">
-                              <tr>
-                                <th scope="col">S.N.</th>
-                                <th scope="col">Title </th>
-                                <th scope="col">Download </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              @foreach ($pages as $item)
-                              @foreach ($item->pages as $item)
-                              @if ($item->page_type_id==5)
-                              @if ($item->Parents!=null)
-                              @foreach ($item->Parents as $key=> $item)
-                              @php
-                                  $content = json_decode($item->content,true);
-                                  // dd($content);
-                              @endphp
-                              <tr>
-                                <td class="w-5">{{$key+1}}</td>
-                                <td>{{isset($item->title) ? $item->title : ''}} </td>
-                                <td class="w-5 text-center"> <a href="{{route('downloadFile',$content['RealFile'])}} "> <i class="fa-solid fa-download"></i> </a> </td>
-                              </tr>
-                              @endforeach
-                              @endif
-                              @endif
-                              @endforeach
-                              @endforeach
-                             
-                            </tbody>
-                          </table>
+                              <thead class="bg text-light">
+                                <tr>
+                                  <th scope="col">Photo</th>
+                                  <th scope="col">Name </th>
+                                  <th scope="col">Designation</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                @foreach ($program->Parents as $item)
+                                    @php
+                                        $data=json_decode($item->content);
+                                    @endphp
+                                <tr>
+                                  {{-- {{isset($item->pictures[0])) ? $item->pictures[0]) : ''}} --}}
+                                  <td><img src="{{ asset('storage/upload/' . $item->pictures[0]->url) }}" alt=""
+                                    class="px-1" width="100"></td>
+                                  <td>{{isset($data->name) ? $data->name : ''}}</td>
+                                  <td>{{isset($data->Designation) ? $data->Designation : ''}}</td>
+                                </tr>
+                                @endforeach
+
+                               
+                              </tbody>
+                            </table>
+                            
+                            
                       </div>
                   </div>
               </div>

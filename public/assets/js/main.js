@@ -87,6 +87,7 @@ $('.banner').owlCarousel({
   loop:true,
   margin:10,
   nav:true,
+  dots:false,
   autoplay: true,
   animateOut: "fadeOut",
   autoplayTimeout: 10000,

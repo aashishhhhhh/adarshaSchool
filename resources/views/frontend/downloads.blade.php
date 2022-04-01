@@ -1,7 +1,10 @@
 @include('frontend.layout.header')
     <!-- Navigation -->
+    @php
+        // dd($pages);
+    @endphp
    @include('frontend.layout.navigation')
-<main class="container">
+   <main class="container">
     <div class="main-body">
 
       <!-- section two -->
@@ -12,10 +15,9 @@
             <div class="col-md-8">
               <div class="left-box">
                   <div class="page">
-                      <h4 class="page-title"> General </h4>
+                      <h4 class="page-title">  Downloads  </h4>
                       <div class="page-body">
-                          {{-- <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis cumque earum omnis? Consectetur, asperiores ducimus.</p>   --}}
-
+                          <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis cumque earum omnis? Consectetur, asperiores ducimus.</p>  
                           <table class="table mt-5">
                             <thead class="bg text-light">
                               <tr>
@@ -25,25 +27,33 @@
                               </tr>
                             </thead>
                             <tbody>
-                              @foreach ($pages as $item)
-                              @foreach ($item->pages as $item)
-                              @if ($item->page_type_id==5)
-                              @if ($item->Parents!=null)
-                              @foreach ($item->Parents as $key=> $item)
-                              @php
-                                  $content = json_decode($item->content,true);
-                                  // dd($content);
-                              @endphp
-                              <tr>
+                                @foreach ($pages as $item)
+                                    
+                                @if ($item->title=='DOWNLOADS')
+                                @if ($item->pages!=null)
+                                    
+                                @foreach ($item->pages as $key=> $value)
+                                @php
+                                $data= json_decode($value->content,true);
+                                 @endphp
+                               <tr>
                                 <td class="w-5">{{$key+1}}</td>
-                                <td>{{isset($item->title) ? $item->title : ''}} </td>
-                                <td class="w-5 text-center"> <a href="{{route('downloadFile',$content['RealFile'])}} "> <i class="fa-solid fa-download"></i> </a> </td>
+                                <td> {{$data[0]['title']}}</td>
+                               @php
+                                   $content=json_decode($item->content,true);
+                               @endphp
+                                
+                                <td class="w-5 text-center"> <a href="{{route('downloadFile',$data['RealFile'])}} "> <i class="fa-solid fa-download"></i> </a> </td>
+                                
                               </tr>
+
                               @endforeach
                               @endif
+
                               @endif
+
                               @endforeach
-                              @endforeach
+
                              
                             </tbody>
                           </table>
@@ -83,4 +93,4 @@
       </section>
     </div>
   </main>
-  @include('frontend.layout.footer')
+   @include('frontend.layout.footer')

@@ -10,8 +10,14 @@
               <div class="col-md-8">
                 <div class="left-box">
                   <!-- slider  -->
+               
                   <div id="banner">
                     <div class="owl-carousel banner owl-theme">
+
+                        @foreach ($pages as $key => $value)
+                        @if ($value->title=='Slider')
+                        @foreach ($value->pages as $item)
+                        @foreach ($item->pictures as $value)
                       <div
                         class="item"
                         style="
@@ -20,20 +26,15 @@
                               rgb(23 61 98 /0%),
                               rgb(23 61 98 / 0%)
                             ),
-                            url('assets/images/banner001.jpg');
+                            url('{{ asset('storage/upload/' .$value->url)}}');
                         "
                       ></div>
-                      <div
-                        class="item"
-                        style="
-                          background-image: linear-gradient(
-                              to right,
-                              rgb(23 61 98 /0%),
-                              rgb(23 61 98 / 0%)
-                            ),
-                            url('assets/images/banner002.jpg');
-                        "
-                      ></div>
+                      @endforeach
+                      @endforeach
+                      @endif
+                      @endforeach
+
+                  
                     </div>
                   </div>
                 </div>
@@ -41,9 +42,11 @@
 
               @foreach ($pages as $item)
               @foreach ($item->pages as $item)
-              @if ($item->page_type_id==1)
+             
+              @if ($item->slug=='principles-message')
               @php
                     $content = json_decode($item->content,true);
+                    
               @endphp
               <div class="col-md-4">
                 <div class="right-box">
@@ -64,7 +67,9 @@
                       </p>
                       @php
                       @endphp
-                      <a href="">Read More..</a>
+                      <a href="{{route('program.slug',$item->slug)}}">@isset($content['message'])
+                          {!!substr($content['message'], 0, 300)!!}
+                      @endisset <br> Read More..</a>
                     </div>
                   </div>
                 </div>
@@ -85,170 +90,88 @@
               <!-- left box -->
               <div class="col-md-8">
                 <div class="left-box">
-                  <!-- <div class="exam-content">
+                                    
+                  <div class="exam-content">
                     <div class="exam__title">
-                      <h3>सूचना :-</h3>
+                      Exam Notice: 
                     </div>
-                    <div class="exam__description example1">
-                      <ul>
-                        <li>
-                          <a href="#"
-                            >Lorem ipsum, dolor sit amet consectetur adipisicing
-                            elit. Totam, fugiat.</a
-                          >
-                        </li>
-                        <li>
-                          <a href="#"
-                            >Lorem ipsum, dolor sit amet consectetur adipisicing
-                            elit. Totam, fugiat.</a
-                          >
-                        </li>
-                      </ul>
+                    <div class="hwrap">
+                      <div class="hmove">
+                        @php
+                            $i=0;
+                        @endphp
+                        @foreach ($pages as $item)
+                      
+                        @foreach ($item->pages as $item)
+                          @if ($item->slug=='exam')
+                          @php
+                          @endphp
+                            @if ($item->Parents!=null)
+                             @foreach ($item->Parents as $item)
+                        <div class="hitem"><a href="{{route('single-notice',$item->slug)}}"> {{isset($item->title) ? $item->title : ''}}
+                        </a></div>
+                        @if ($i==5)
+                            @php
+                              break;
+                            @endphp
+                        @endif
+                        @endforeach
+                        @endif
+                       @endif
+                     @endforeach
+                    @endforeach
+                      
+                      </div>
                     </div>
-                  </div> -->
+                    <div class="view-all">
+                      @foreach ($pages as $item)
+                      @foreach ($item->pages as $item)
+                        @if ($item->slug=='exam')
+                    <a href="{{route('program.slug',$item->slug)}}"> View all</a>
+                    @endif
+                    @endforeach
+                   @endforeach
+                    </div>
+                  </div>
                   <div class="notice">
-                    <h1>Notice Board</h1>
+                    <div class="notice-title-section">
+                      <h1>Notice Board</h1>
+                      <a href="general.html"> View all</a>
+                    </div>
                     <!-- .itme -->
                     @foreach ($pages as $item)
-                    @foreach ($item->pages as $item)
-                    @if ($item->page_type_id==5)
-                    @if ($item->Parents!=null)
+                       @foreach ($item->pages as $item)
+                       
+                         @if ($item->slug=='general')
                         
-                    @foreach ($item->Parents as $item)
-                    @php
-                        $content = json_decode($item->content,true);
-                    @endphp
-                    <div class="notice_item">
-                      <div class="info">
-                        <h4>
-                          <a href="{{route('general.notice',$item->slug)}}">
-                        {{isset($item->title) ? $item->title : ''}}
-                           </a
-                          >
-                        </h4>
-                        <p>
-                          <i class="fa-solid fa-clock"></i>
-                        {{isset($content['date']) ? $content['date'] : ''}}
-                        <span>  </span>
-                        </p>
-                      </div>
-                      <div class="img_box">
-                        <span> <i class="fa-solid fa-angle-right"></i> </span>
-                      </div>
-                    </div>
+                           @if ($item->Parents!=null)
+                            @foreach ($item->Parents as $item)
+                                    @php
+                                        $content = json_decode($item->content,true);
+                                    @endphp
+                                    <div class="notice_item">
+                                      <div class="info">
+                                        <h4>
+                                          <a href="{{route('single-notice',$item->slug)}}"> {{isset($item->title) ? $item->title : ''}}
+                                          </a>
+                                        </h4>
+                                        <p>
+                                          <i class="fa-solid fa-clock"></i>
+                                      
+                                        <span> {{isset($content[0]['date']) ? $content[0]['date'] : ''}}  </span>
+                                        </p>
+                                      </div>
+                                      <div class="img_box">
+                                        <span> <i class="fa-solid fa-angle-right"></i> </span>
+                                      </div>
+                                    </div>
+                          @endforeach
+                        @endif
+                       @endif
+                     @endforeach
                     @endforeach
-                    @endif
-                    @endif
-                    @endforeach
-                    @endforeach
                     <!-- .itme -->
-                    <div class="notice_item">
-                      <div class="info">
-                        <h4>
-                          <a href="general.html">
-                            लुम्बिनी प्रदेश: वैकल्पिक उम्मेदवारलाई आवेदनको लागि
-                            सूचना - २०७८/१२/१०</a
-                          >
-                        </h4>
-                        <p>
-                          <i class="fa-solid fa-clock"></i>
-                          <span> Dec 15, 2022 </span>
-                        </p>
-                      </div>
-                      <div class="img_box">
-                        <span> <i class="fa-solid fa-angle-right"></i> </span>
-                      </div>
-                    </div>
-                    <!-- .itme -->
-                    <div class="notice_item">
-                      <div class="info">
-                        <h4>
-                          <a href="general.html">
-                            लुम्बिनी प्रदेश: वैकल्पिक उम्मेदवारलाई आवेदनको लागि
-                            सूचना - २०७८/१२/१०</a
-                          >
-                        </h4>
-                        <p>
-                          <i class="fa-solid fa-clock"></i>
-                          <span> Dec 15, 2022 </span>
-                        </p>
-                      </div>
-                      <div class="img_box">
-                        <span> <i class="fa-solid fa-angle-right"></i> </span>
-                      </div>
-                    </div>
-                    <!-- .itme -->
-                    <div class="notice_item">
-                      <div class="info">
-                        <h4>
-                          <a href="general.html">
-                            लुम्बिनी प्रदेश: वैकल्पिक उम्मेदवारलाई आवेदनको लागि
-                            सूचना - २०७८/१२/१०</a
-                          >
-                        </h4>
-                        <p>
-                          <i class="fa-solid fa-clock"></i>
-                          <span> Dec 15, 2022 </span>
-                        </p>
-                      </div>
-                      <div class="img_box">
-                        <span> <i class="fa-solid fa-angle-right"></i> </span>
-                      </div>
-                    </div>
-                    <!-- .itme -->
-                    <div class="notice_item">
-                      <div class="info">
-                        <h4>
-                          <a href="general.html">
-                            लुम्बिनी प्रदेश: वैकल्पिक उम्मेदवारलाई आवेदनको लागि
-                            सूचना - २०७८/१२/१०</a
-                          >
-                        </h4>
-                        <p>
-                          <i class="fa-solid fa-clock"></i>
-                          <span> Dec 15, 2022 </span>
-                        </p>
-                      </div>
-                      <div class="img_box">
-                        <span> <i class="fa-solid fa-angle-right"></i> </span>
-                      </div>
-                    </div>
-                    <!-- .itme -->
-                    <div class="notice_item">
-                      <div class="info">
-                        <h4>
-                          <a href="general.html">
-                            लुम्बिनी प्रदेश: वैकल्पिक उम्मेदवारलाई आवेदनको लागि
-                            सूचना - २०७८/१२/१०</a
-                          >
-                        </h4>
-                        <p>
-                          <i class="fa-solid fa-clock"></i>
-                          <span> Dec 15, 2022 </span>
-                        </p>
-                      </div>
-                      <div class="img_box">
-                        <span> <i class="fa-solid fa-angle-right"></i> </span>
-                      </div>
-                    </div>
-                    <!-- .itme -->
-                    <div class="notice_item">
-                      <div class="info">
-                        <h4>
-                          <a href="#">
-                            लुम्बिनी प्रदेश: वैकल्पिक उम्मेदवारलाई आवेदनको लागि
-                            सूचना - २०७८/१२/१०</a
-                          >
-                        </h4>
-                        <p>
-                          <i class="fa-solid fa-clock"></i>
-                          <span> Dec 15, 2022 </span>
-                        </p>
-                      </div>
-                      <div class="img_box">
-                        <span> <i class="fa-solid fa-angle-right"></i> </span>
-                      </div>
-                    </div>
+                  
                   </div>
                 </div>
               </div>
@@ -278,38 +201,8 @@
                       </blockquote>
                     </div>
                   </div>
-                  <div class="photo-gallery">
-                    <h4>Photo Gallery</h4>
-                    <!-- <div class="gallery"> -->
-                    <div class="owl-carousel gallery owl-theme">
-                      <div class="item">
-
-                        <a class="gimg" href="{{ asset('assets/images/banner001.jpg') }}"
-                          ><img
-                            src="assets/images/banner001.jpg"
-                            alt="Gallery Image"
-                        /></a>
-                      </div>
-
-                      <div class="item">
-                        <a class="gimg" href="{{ asset('assets/images/banner002.jpg') }}"
-                          ><img
-                            src="assets/images/banner002.jpg"
-                            alt="Gallery Image"
-                        /></a>
-                      </div>
-                    </div>
-                    <!-- </div> -->
-                  </div>
-                  <div class="video-gallery">
-                    <h4>Video Gallery</h4>
-                    <iframe
-                      width="100%"
-                      height="200"
-                      src="https://www.youtube.com/embed/lZ3p8qYvZws"
-                    >
-                    </iframe>
-                  </div>
+                  @include('frontend.layout.gallery')
+                  
                 </div>
               </div>
             </div>

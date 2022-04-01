@@ -16,7 +16,7 @@
                     {{ __('Gallery Images') }}
                 </span>
             </div>
-            @foreach ($gallery->pictures as $image)
+            @foreach ($album->pictures as $image)
             <span style="margin:5px" wire:click="removeImage('{{ $image->id }}')"><i class="fas fa-times"></i></i></span>
                 <a href="{{ asset('storage/upload/' . $image->url) }}" target="_blank">
                     <img src="{{ asset('storage/thumbnails/' . $image->url) }}" alt=""

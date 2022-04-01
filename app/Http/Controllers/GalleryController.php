@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Ui\Presets\React;
 use Illuminate\Support\Str;
+use File;
 
 class GalleryController extends Controller
 {
@@ -32,6 +33,7 @@ class GalleryController extends Controller
     }
 
     public function store(Request $request,MediaHelper $mediaHelper){
+        // dd($request->all());
         $data=$request->validate([
             'title'=>'required',
             'photo.*' => 'required',
@@ -45,8 +47,9 @@ class GalleryController extends Controller
                 $id= Page::create([
                     'slug'=>Str::slug($request->title),
                     'title'=>$request->title,
+                    'page_id'=>$request->album_id,
                     'content'=>json_encode($request->except('_token')),
-                    'page_type_id'=>$this->pageType->id,
+                    'page_type_id'=>null,
                     'show_on_home'=>1
                 ]);
 
@@ -81,7 +84,6 @@ class GalleryController extends Controller
                 foreach ($request->photo as $key => $image) {
                    $imageName[]=$mediaHelper->uploadSingleImage($image);
                 }
-                   
 
                 foreach ($imageName as $key => $image) {
                     Picture::create([
@@ -101,10 +103,11 @@ class GalleryController extends Controller
         return redirect()->route('gallery.index')->with('msg','Gallery Created successfully');
     }
 
-    public function showPhotos(Page $gallery)
+    public function showPhotos(Page $album)
     {
-        $gallery->load('pictures');
-        return view('gallery.show-pictures',compact('gallery'));
+        
+       $album = $album->load('pictures');
+        return view('gallery.show-pictures',compact('album'));
     }
 
     public function galleryDestroy(Page $gallery)
@@ -114,5 +117,30 @@ class GalleryController extends Controller
            $gallery->delete();
        }
        return redirect()->route('gallery.index')->with('msg','Gallery Deleted successfully');
+    }
+
+    public function albumCreate(Page $album)
+    {
+        return view('gallery.album-add',compact('album'));
+    }
+
+    public function albumEdit(Page $album )
+    {
+        $album->load('pictures');
+        return view('gallery.album-edit',compact('album'));
+    }
+
+    public function albumDelete(Page $album)
+    {
+       $album->load('pictures');
+       if (count($album->pictures)!=null) {
+           foreach ($album->pictures as $key => $value) {
+            if (File::exists(public_path('storage/upload/' . $value->url))) {
+                File::delete(public_path('storage/upload/' . $value->url));
+            }
+           }
+           $album->delete();
+        return redirect()->route('gallery.index')->with('msg','Album Deleted successfully');
+       }
     }
 }

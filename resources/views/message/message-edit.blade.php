@@ -26,7 +26,7 @@
    </div>
    <label for="exampleInputEmail1">Message</label>
     <div class="form-group">
-    <textarea name="message" id="" cols="200" rows="10">{{$data->message}}</textarea>
+    <textarea class="ckeditor form-control" name="message" id="" cols="200" rows="10">{{$data->message}}</textarea>
     </div>
     
     

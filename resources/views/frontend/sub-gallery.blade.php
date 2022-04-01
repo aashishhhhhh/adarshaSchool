@@ -1,7 +1,7 @@
 @include('frontend.layout.header')
     <!-- Navigation -->
    @include('frontend.layout.navigation')
-<main class="container">
+   <main class="container">
     <div class="main-body">
 
       <!-- section two -->
@@ -12,41 +12,42 @@
             <div class="col-md-8">
               <div class="left-box">
                   <div class="page">
-                      <h4 class="page-title"> General </h4>
+                    @php
+                        $content= json_decode($program->content);
+                    @endphp
+                      <h4 class="page-title">  {{isset($program->title) ? $program->title : ''}}   </h4>
                       <div class="page-body">
-                          {{-- <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis cumque earum omnis? Consectetur, asperiores ducimus.</p>   --}}
+                          <p>@isset($content->description)
+                            {!!$content->description!!}
+                          @endisset  </p>  
+                          <div class="sub-photo-gallery row">
+                            <!-- gallery item -->
+                            <div class="sub_gallery_item">
+                              @if ($program->pictures!=null)
+                                  
+                                @foreach ($program->pictures as $item)
+                                @php
+                                    
+                                @endphp
+                              <div class="sub_gallery_item_img">
+                                <a class="gimg" href="{{ asset('storage/upload/' .$item->url)}}"><img src="{{ asset('storage/upload/' .$item->url)}}" alt="Gallery Image"></a> 
+                              </div>
+                              @endforeach
+                              @endif
 
-                          <table class="table mt-5">
-                            <thead class="bg text-light">
-                              <tr>
-                                <th scope="col">S.N.</th>
-                                <th scope="col">Title </th>
-                                <th scope="col">Download </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              @foreach ($pages as $item)
-                              @foreach ($item->pages as $item)
-                              @if ($item->page_type_id==5)
-                              @if ($item->Parents!=null)
-                              @foreach ($item->Parents as $key=> $item)
-                              @php
-                                  $content = json_decode($item->content,true);
-                                  // dd($content);
-                              @endphp
-                              <tr>
-                                <td class="w-5">{{$key+1}}</td>
-                                <td>{{isset($item->title) ? $item->title : ''}} </td>
-                                <td class="w-5 text-center"> <a href="{{route('downloadFile',$content['RealFile'])}} "> <i class="fa-solid fa-download"></i> </a> </td>
-                              </tr>
-                              @endforeach
-                              @endif
-                              @endif
-                              @endforeach
-                              @endforeach
+
+                              {{-- <div class="sub_gallery_item_img">
+                                <a class="gimg" href="assets/images/banner001.jpg"><img src="assets/images/banner001.jpg" alt="Gallery Image"></a> 
+                              </div>
+
+                              <div class="sub_gallery_item_img">
+                                <a class="gimg" href="assets/images/banner001.jpg"><img src="assets/images/banner001.jpg" alt="Gallery Image"></a> 
+                              </div> --}}
                              
-                            </tbody>
-                          </table>
+                                
+                            </div>
+                           
+                          </div>
                       </div>
                   </div>
               </div>
@@ -83,4 +84,4 @@
       </section>
     </div>
   </main>
-  @include('frontend.layout.footer')
+@include('frontend.layout.footer')

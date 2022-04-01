@@ -30,7 +30,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-9 brand">
-            <a href="index.html">
+            <a href="{{url('/')}}">
 
               <img class="brand-logo" src="{{ asset('assets/images/logo.jpg') }}" alt="" />
             </a>

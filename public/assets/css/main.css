@@ -38,6 +38,12 @@ Secondary Color :: da251c
 .pc {
   color: #324797;
 }
+
+p{
+  font-size: .9rem;
+  color: #777;
+  line-height: 1.6;
+}
 body {
   /* font-family: "Poppins", sans-serif; */
   font-family: "Roboto", sans-serif;
@@ -60,39 +66,71 @@ body {
 /* Exam topic */
 .exam-content {
   display: flex;
-  background: rgb(38, 35, 35);
+  background: #f6f6f6;
   /* position: fixed;
   bottom: 0;
   left: 0; */
   width: 100%;
   /* height: 5vh; */
-  align-items: center;
+  /* align-items: center; */
+  justify-content: space-between;
+
 }
 
 .exam-content .exam__title {
-  background: #1e73be;
+  background: #324797;
   color: #fff;
   font-weight: 600;
   display: flex;
   align-items: center;
-  padding: 0 3rem;
+  padding: .6rem 1rem;
   height: inherit;
   z-index: 999;
+  height: 100%;
+  max-width: 180px;
+  min-width: 135px;
   /* position: relative; */
 }
-.exam-content .exam__title h3 {
+/* .exam-content .exam__title h3{
   font-size: 1rem;
-}
-
-/* .exam-content .news__title:after {
-  position: absolute;
-  content: "";
-  right: 0%;
-  border-left: 20px solid red;
-  border-top: 33px solid transparent;
-  border-right: 20px solid transparent;
-  border-bottom: 33px solid transparent;
 } */
+/* Amination text  */
+/* (A) FIXED WRAPPER */
+.hwrap {
+  overflow: hidden; /* HIDE SCROLL BAR */
+  background: #f6f6f6;
+}
+ 
+/* (B) MOVING TICKER WRAPPER */
+.hmove { display: flex; align-items: center;}
+
+/* (C) ITEMS - INTO A LONG HORIZONTAL ROW */
+.hitem {
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0px;
+  text-align: left;
+  padding-top: 5px;
+
+}
+.hitem a{
+  text-decoration: none;
+  color:#777;
+  padding-top:5px;
+}
+ 
+/* (D) ANIMATION - MOVE ITEMS FROM RIGHT TO LEFT */
+/* 4 ITEMS -400%, CHANGE THIS IF YOU ADD/REMOVE ITEMS */
+@keyframes tickerh {
+  0% { transform: translate3d(100%, 0, 0); }
+  25% { transform: translate3d(-100%, 0, 0); }
+  50% { transform: translate3d(-200%, 0, 0); }
+  75% { transform: translate3d(-300%, 0, 0); }
+  100% { transform: translate3d(-400%, 0, 0); }
+}
+.hmove { animation: tickerh linear 45s infinite; }
+.hmove:hover { animation-play-state: paused; }
 
 .exam-content .exam__description {
   color: rgb(255, 255, 255);
@@ -101,32 +139,17 @@ body {
   overflow: hidden;
 }
 
-.exam-content .exam__description ul {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  animation: scroll 55s infinite linear;
-}
 
-.exam-content .exam__description ul li {
-  white-space: nowrap;
-  color: #f4f4f4;
-  position: relative;
-  padding: 0 2rem;
+.view-all{
+  min-width: 85px;
+  max-width: 100px;
+  padding: 6px;
+  text-align: center;
 }
-
-.exam-content .exam__description ul li::after {
-  content: "";
-  width: 1px;
-  height: 100%;
-  background: #b8b8b8;
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-.exam-content .exam__description ul li:last-child::after {
-  display: none;
+.view-all a{
+    text-decoration: none;
+    color: #324797;
+    font-size: .76rem;
 }
 
 /* owl carousel re-set */
@@ -789,7 +812,17 @@ nav {
 #section1 .notice {
   padding: 15px;
 }
-#section1 .notice h1 {
+.notice .notice-title-section{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.notice .notice-title-section a{
+  font-size: .8rem;
+  color: #1e4797;
+}
+
+#section1 .notice .notice-title-section h1 {
   font-size: 1.2rem;
   padding: 8px 0;
   color: #1e4797;
@@ -797,6 +830,7 @@ nav {
   margin-bottom: 15px;
   font-weight: 600;
 }
+
 .notice .notice_item {
   display: flex;
   justify-content: space-between;
@@ -1168,3 +1202,8 @@ form.feedback input[type="submit"]:hover {
 .video_gallery_item_img img:hover{
   transform: scale(1.15);
 } */
+
+
+.sing-notice a{
+  font-size: .8rem;
+}
