@@ -37,7 +37,7 @@
                                 @endphp
                               <tr>
                                 <td class="w-5">{{$key+1}}</td>
-                                <td> {!!$data[0]['title']!!}</td>
+                                <td><a href="{{route('single-notice',$item->slug)}}">  {!!$data[0]['title']!!} </a></td>
                                @php
                                    $content=json_decode($item->content,true);
                                @endphp

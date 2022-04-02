@@ -42,9 +42,9 @@
           <div class="col-md-3">
             <div class="login-menu">
               <ul>
-                <li><a href="#" target="_blank"> Login </a></li>
-                |
-                <li><a href="#" target="_blank"> Registration </a></li>
+                <li><a href="{{url('/login')}}" target="_blank"> Login </a></li>
+                
+                {{-- <li><a href="#" target="_blank"> Registration </a></li> --}}
               </ul>
             </div>
             <div class="search_box">

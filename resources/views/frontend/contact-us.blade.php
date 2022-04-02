@@ -12,14 +12,21 @@
             <!-- left box -->
             <div class="col-md-8">
               <div class="left-box">
+                @if (session()->has('msg'))
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>{{session('msg')}}</strong> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  @endif
                   <div class="page">
                       <h4 class="page-title"> Contact  </h4>
                       <div class="page-body">
-                          <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis cumque earum omnis? Consectetur, asperiores ducimus.</p>  
+                          <p> Contact us by filling up the form below</p>  
 
                           <form action="{{route('feedback')}}" class="feedback" method="POST" >
                             @csrf
-                            <h4 class="title"> Feedback </h4>
                             <br>
                             Full name: <br>
                             <input class="form-contol" type="text" name="name"><br>

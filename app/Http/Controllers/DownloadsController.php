@@ -8,6 +8,7 @@ use App\Models\PageType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use File;
 
 class DownloadsController extends Controller
 {
@@ -101,6 +102,16 @@ class DownloadsController extends Controller
              }
             });
             return redirect()->route('download.index')->with('msg','download Updated successfully');
+    }
+
+    public function downloadDelete(Page $download)
+    {
+        $file=json_decode($download->content);
+        if (File::exists(public_path('storage/upload/' . $file->RealFile))) {
+            File::delete(public_path('storage/upload/' . $file->RealFile));
+        }
+        $download->delete();
+        return redirect()->route('download.index')->with('msg','Notice Deleted successfully');
     }
 
 }

@@ -7,6 +7,7 @@ use App\Models\Page;
 use App\Models\PageType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use File;
 
 class NoticeBoardController extends Controller
 {
@@ -111,8 +112,11 @@ class NoticeBoardController extends Controller
 
     public function noticesDelete(Page $notice)
     {
+        $file=json_decode($notice->content);
+        if (File::exists(public_path('storage/upload/' . $file->RealFile))) {
+            File::delete(public_path('storage/upload/' . $file->RealFile));
+        }
         $notice->delete();
         return redirect()->route('notice.index')->with('msg','Notice Deleted successfully');
     }
-
 }

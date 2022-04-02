@@ -24,7 +24,7 @@ class NoticeList extends Component
     public function editNotice($id)
     {
         $this->msg=null;
-        $this->notices= Page::find($id);
+        $this->noticeChild= Page::find($id);
         $this->dispatchBrowserEvent('edit-notice');
     }
     public function addNotice()

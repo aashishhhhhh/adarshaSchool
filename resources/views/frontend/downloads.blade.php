@@ -17,7 +17,7 @@
                   <div class="page">
                       <h4 class="page-title">  Downloads  </h4>
                       <div class="page-body">
-                          <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis cumque earum omnis? Consectetur, asperiores ducimus.</p>  
+                          {{-- <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis cumque earum omnis? Consectetur, asperiores ducimus.</p>   --}}
                           <table class="table mt-5">
                             <thead class="bg text-light">
                               <tr>

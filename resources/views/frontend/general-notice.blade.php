@@ -36,7 +36,7 @@
                               @endphp
                               <tr>
                                 <td class="w-5">{{$key+1}}</td>
-                                <td>{{isset($item->title) ? $item->title : ''}} </td>
+                                <td><a href="{{route('single-notice',$item->slug)}}"> {{isset($item->title) ? $item->title : ''}}  </a></td>
                                 <td class="w-5 text-center"> <a href="{{route('downloadFile',$content['RealFile'])}} "> <i class="fa-solid fa-download"></i> </a> </td>
                               </tr>
                               @endforeach

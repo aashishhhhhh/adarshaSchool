@@ -21,7 +21,7 @@
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
                         Add Page
                         <i class="fas fa-plus px-1"></i>
-                      </button>
+                      </button> 
                   
                 </div>
             </div>
@@ -38,6 +38,7 @@
         <tr>
         <th>S.N</th>
         <th>Page</th>
+        <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -45,6 +46,15 @@
         <tr>
          <td>{{$key+1}}</td>
          <td>{{$item->title}}</td>
+       
+        <th>  @if ($item->show_on_homepage==1)
+          <a href="{{route('disable',$item->id)}}" class="btn btn-primary">Disable</a>
+          @endif
+          @if ($item->show_on_homepage==0)
+          <a href="{{route('enable',$item->id)}}" class="btn btn-primary">Enable</a>
+          @endif
+        </th>
+
         </tr>
         @endforeach
         </tbody>

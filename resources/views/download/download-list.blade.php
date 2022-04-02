@@ -52,7 +52,7 @@
             target="_blank"> Show File<i class="fas fa-eye"></i> </a></td>
             <td><a class="btn btn-primary" href="{{route('download.edit',$value->id)}}"
                 > <i class="fas fa-edit"></i>Edit </a>
-                <a class="btn btn-primary" href="{{route('resultt.destroy',$value->id)}}"
+                <a class="btn btn-primary" href="{{route('downloadd.destroy',$value->id)}}"
                     ><i class="fas fa-trash"></i>Delete </a>
             </td>
         </tr>

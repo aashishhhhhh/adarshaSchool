@@ -59,7 +59,7 @@
                 <td>{{$key+1}}</td>
                 <td>{{$item->title}}</td>
                     <td>
-                        <button wire:click="editNotice('{{$item->id}}')" class="btn btn-primary"><i class="fas fa-edit"></i>Edit</button>
+                        {{-- <button wire:click="editNotice('{{$item->id}}')" class="btn btn-primary"><i class="fas fa-edit"></i>Edit</button> --}}
                         <button wire:click="deleteNotice('{{$item->id}}')" type="submit" class="btn btn-primary" ><i class="fas fa-trash-alt"></i>Delete</button> 
                     </td> 
                     <td><button wire:click="showNotices('{{$item->id}}')" type="submit" class="btn btn-primary" ><i class="fas fa-eye"></i>Show</button>

@@ -18,6 +18,7 @@ use App\Http\Controllers\StudentsController;
 use App\Http\Livewire\Gallery;
 use App\Models\AboutUs;
 use App\Models\Page;
+use App\Models\PageType;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,9 +36,10 @@ Route::get('/login', function () {
     return view('auth.login');
 });
 
-Route::get('test',[PageController::class,'test']);
-Route::post('submit',[PageController::class,'submit'])->name('test.create');
+// Route::get('test',[PageController::class,'test']);
+// Route::post('submit',[PageController::class,'submit'])->name('test.create');
 
+//Website Routes
 
 Route::get('/',[FrontendController::class,'home'])->name('welcome');
 Route::get('/generalNotice/{slug}',[FrontendController::class,'generalNotice'])->name('general.notice');
@@ -48,11 +50,15 @@ Route::get('subgallery/{slug}',[FrontendController::class,'subGallery'])->name('
 Route::post('feedback',[FrontendController::class,'feedback'])->name('feedback');
 Route::get('singlenotice/{slug}',[FrontendController::class,'singleNotice'])->name('single-notice');
 
+//CMS Route
 Auth::routes(['register'=>false]);
 Route::group(['middleware'=>'auth'],function(){
     Route::prefix('admin')->group(function () {
     Route::get('/adminHome', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('page-type', PageTypeController::class)->except(['edit']);
+    Route::get('disable/{page}',[PageTypeController::class,'disable'])->name('disable');
+    Route::get('enable/{page}',[PageTypeController::class,'enable'])->name('enable');
+
     Route::resource('page', PageController::class)->only(['index','create','store','update','edit','destroy']);
     Route::resource('sliders', SliderController::class)->only(['index','create','store','update','edit','destroy']);
     Route::resource('message', MessageController::class)->only(['index','create','store','update','edit','destroy']);
@@ -78,6 +84,7 @@ Route::group(['middleware'=>'auth'],function(){
     Route::resource('result',ResultController::class)->only(['index','create','store','update','edit','destroy']);
     Route::get('resultDestory/{result}',[ResultController::class,'resultDestroy'])->name('resultt.destroy');
     Route::resource('download',DownloadsController::class)->only(['index','create','store','update','edit','destroy']);
+    Route::get('downloadDelete/{download}',[DownloadsController::class,'downloadDelete'])->name('downloadd.destroy');
     Route::resource('gallery',GalleryController::class)->only(['index','create','store','update','edit','destroy']);
     Route::get('albumCreate/{album}',[GalleryController::class,'albumCreate'])->name('albumCreate');
     Route::get('albutEdit/{album}',[GalleryController::class,'albumEdit'])->name('album-edit');
@@ -85,10 +92,15 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('showPhotos/{album}',[GalleryController::class,'showPhotos'])->name('showPhotos');
     Route::get('galleryDestroy/{gallery}',[GalleryController::class,'galleryDestroy'])->name('gallery-delete');
     Route::resource('students',StudentsController::class)->only(['index','create','store','update','edit','destroy']);
+    Route::get('videoAdd/{album}',[GalleryController::class,'addVideo'])->name('videoAdd');
+    Route::post('videoStore',[GalleryController::class,'storeVideo'])->name('video.store');
+    Route::get('showVideo/{album}',[GalleryController::class,'showVideo'])->name('showVideo');
+    Route::get('videEdit/{album}',[GalleryController::class,'editVideo'])->name('video-edit');
+    Route::post('videoUpdate',[GalleryController::class,'videoUpdate'])->name('video.update');
+    Route::get('videoDelete/{album}',[GalleryController::class,'videoDelete'])->name('video-delete');
 });
 });
 
 
-///Frontend Routes
 
 

@@ -100,13 +100,13 @@
                         data-accordion="false">
                         <li class="nav-item">
                             <a href="{{route('page-type.index')}}" class="nav-link @yield('is_active_pages')">
-                                <i class="fas fa-building"></i>
+                                <i class="fas fa-file"></i>
                                Pages
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('sliders.index')}}" class="nav-link @yield('is_active_slider')">
-                                <i class="fas fa-building"></i>
+                                <i class="fas fa-sliders-h"></i>
                                Sliders
                             </a>
                         </li>
@@ -122,14 +122,14 @@
                                About Us
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="{{route('contactUs.index')}}" class="nav-link @yield('is_active_contact_us')">
                                 <i class="fas fa-address-card"></i>
                                Contact Us
                             </a>
-                        </li>
+                        </li> --}}
 
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="{{route('faculty.index')}}" class="nav-link @yield('is_active_faculty')">
                                 <i class="fas fa-building"></i>
                                Faculty
@@ -138,9 +138,36 @@
 
                         <li class="nav-item">
                             <a href="{{route('course.index')}}" class="nav-link @yield('is_active_course')">
-                                <i class="fas fa-building"></i>
+                                <i class="fas fa-book"></i>
                                Course
                             </a>
+                        </li> --}}
+
+                        <li class="nav-item has-treeview @yield('menu_show_faculty') ">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-building"></i>
+
+                                <p class="px-2 font-weight-bold">
+                                    {{ __('Faculty') }}
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview " style="display: @yield('s_child_faculty')">
+                                <li class="nav-item">
+                                    <a href="{{route('faculty.index')}}"
+                                        class="nav-link @yield('setting_faculty')">
+                                        <i class="far fa-circle nav-icon"></i>
+                                            Faculty
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('course.index')}}"
+                                        class="nav-link @yield('setting_course')">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        Course
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('notice.index')}}" class="nav-link @yield('is_active_notice')">
@@ -148,6 +175,8 @@
                                Notice
                             </a>
                         </li>
+
+                       
 
                         <li class="nav-item">
                             <a href="{{route('result.index')}}" class="nav-link @yield('is_active_result')">
@@ -170,8 +199,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('students.index')}}" class="nav-link @yield('is_active_students')">
-                                <i class="fas fa-photo-video"></i>
+                            <a href="#" class="nav-link @yield('is_active_students')">
+                                <i class="fas fa-graduation-cap"></i>
                                Alumni
                             </a>
                         </li>

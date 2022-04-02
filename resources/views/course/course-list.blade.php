@@ -1,5 +1,9 @@
 @extends('layouts.main')
-@section('is_active_course','active')
+@section('title', 'Course')
+@section('menu_show_faculty', 'menu-open')
+@section('menu_open', 'menu-open')
+@section('s_child_slider', 'block')
+@section('setting_course', 'active')
 @section('main_content')
 @livewire('course-list', ['faculty'=>$faculty])
 @endsection

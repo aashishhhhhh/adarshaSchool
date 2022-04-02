@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Laravel\Ui\Presets\React;
 use Illuminate\Support\Str;
 use File;
+use ReflectionFunctionAbstract;
 
 class GalleryController extends Controller
 {
@@ -143,4 +144,72 @@ class GalleryController extends Controller
         return redirect()->route('gallery.index')->with('msg','Album Deleted successfully');
        }
     }
+
+    public function addVideo(Page $album)
+    {
+        return view('gallery.video-add',compact('album'));
+    }
+
+    public function storeVideo(Request $request)
+    {
+        $data=$request->validate([
+            'title'=>'required',
+            'link'=>'required'
+        ]);
+        $link=$this->convertYoutube($request->link);
+        DB::transaction(function () use ($request,$link) {
+                $id= Page::create([
+                    'slug'=>Str::slug($request->title),
+                    'title'=>$request->title,
+                    'page_id'=>$request->album_id,
+                    'content'=>json_encode([$request->except('_token'),$link]),
+                    'page_type_id'=>null,
+                    'show_on_home'=>1
+                ]);
+        });
+        return redirect()->route('gallery.index')->with('msg','Gallery Created successfully');
+    }
+
+    public function  convertYoutube($string) {
+        return preg_replace(
+            "/\s*[a-zA-Z\/\/:\.]*youtu(be.com\/watch\?v=|.be\/)([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i",
+            "<iframe src=\"//www.youtube.com/embed/$2\" allowfullscreen></iframe>",
+            $string
+        );
+    }
+
+    public function showVideo(Page $album)
+    {
+        return view('gallery.show-video',compact('album'));
+    }
+    public function editVideo(Page $album)
+    {
+        return view('gallery.video-edit',compact('album'));
+    }
+
+    public function videoUpdate(Request $request)
+    {
+        $album=Page::query()->where('id',$request->album_id)->first();
+        $data=$request->validate([
+            'title'=>'required',
+            'link'=>'required'
+        ]);
+        $link=$this->convertYoutube($request->link);
+        DB::transaction(function () use ($request,$link,$album) {
+            $album->update([
+                'slug'=>Str::slug($request->title), 
+                'title'=>$request->title,
+                'content'=>json_encode([$request->except('_token'),$link]),
+            ]);
+        });
+        return redirect()->route('gallery.index')->with('msg','Video Gallery Edited successfully');
+
+    }
+
+    public function videoDelete(Page $album)
+    {
+        $album->delete();
+        return redirect()->route('gallery.index')->with('msg','Video Deleted Edited successfully');
+    }
+
 }

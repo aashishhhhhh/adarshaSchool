@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\feedback;
+use App\Models\Feedbacks;
 use App\Models\Page;
 use App\Models\PageType;
 use Illuminate\Http\Request;
@@ -79,8 +80,16 @@ class FrontendController extends Controller
             'email'=>'required',
             'feedback'=>'required'
         ]);
+
+        Feedbacks::create([
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'comments'=>$request->feedback
+        ]);
         $mail='admission@adarshaschool.edu.np';
+        
         Mail::to($mail)->send(new feedback($data));
+        return redirect()->back()->with('msg','Feedback given sucessfully');
     }
 
     public function singleNotice($slug)
@@ -89,9 +98,10 @@ class FrontendController extends Controller
         ->with('pages.pictures','pages.Parents')
         ->get();
         $program=Page::query()->where('slug',$slug)->with('pictures','Parents.pictures')->first();
-
         return view('frontend.single-notice',['program'=>$program,'pages'=>$pages]);
     }
+
+    
 
 
 }

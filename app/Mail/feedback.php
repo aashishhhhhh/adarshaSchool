@@ -29,9 +29,10 @@ class feedback extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name')
+        return $this->view('mail')
         ->subject('')
         ->from($this->data['email'],'system')
         ->with('data',$this->data);
+        // $contact='contact-us';
     }
 }
