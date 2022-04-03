@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Course')
+@section('title', 'Course Edit')
 @section('menu_show_faculty', 'menu-open')
 @section('menu_open', 'menu-open')
 @section('s_child_slider', 'block')

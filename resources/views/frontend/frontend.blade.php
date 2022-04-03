@@ -127,6 +127,7 @@
                       @foreach ($pages as $item)
                       @foreach ($item->pages as $item)
                         @if ($item->slug=='exam')
+                      
                     <a href="{{route('program.slug',$item->slug)}}"> View all</a>
                     @endif
                     @endforeach
@@ -145,6 +146,9 @@
                          @if ($item->slug=='general')
                         
                            @if ($item->Parents!=null)
+                           @php
+                             $max=count($item->Parents);
+                           @endphp
                             @foreach ($item->Parents as $item)
                                     @php
                                         $content = json_decode($item->content,true);
@@ -165,6 +169,7 @@
                                         <span> <i class="fa-solid fa-angle-right"></i> </span>
                                       </div>
                                     </div>
+
                           @endforeach
                         @endif
                        @endif

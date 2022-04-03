@@ -48,10 +48,11 @@
                     $content=json_decode($item->content);
                     // dd($content);
                   @endphp
-                  @if ($item->slug!='school')
+                  @if ($item->slug=='school')
                   <li><a href="{{route('program.slug',$item->slug)}}"> {{isset($item->title) ? $item->title : ''}}</a></li>
                   @else
-                  <li><a href="#"> {{isset($item->title) ? $item->title : ''}}</a></li>
+                  <li><a href="{{route('program.slug',$item->slug)}}"> {{isset($item->title) ? $item->title : ''}}</a></li>
+
                   @endif
 
                   @endforeach

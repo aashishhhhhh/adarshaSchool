@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('is_active_about_us','active')
+@section('title','Show Detail')
 @section('main_content')
 <div class="card text-sm ">
     @if (session()->has('msg'))
@@ -17,8 +18,8 @@
                     <p class="">{{ $title}}</p>
                 </div>
                 <div class="col-md-6 text-right">
-                    <a href="{{route('aboutus.create')}}"
-                        class="btn btn-sm btn-primary">{{ __('Add About Us Content') }}
+                    <a href="{{route('aboutus.addDetail',$id)}}"
+                        class="btn btn-sm btn-primary">{{ __('Add Detail') }}
                         <i class="fas fa-plus px-1"></i></a>
                 </div>
             </div>
@@ -37,16 +38,17 @@
         <th>Name</th>
         <th>Designation</th>
         <th>Photo</th>
+        <th>Action</th>
         </tr>
         </thead>
         <tbody>
-            {{-- foreach ($aboutus->pages as $key => $value) {
-                dd(json_decode($value->content));
-                } --}}
+           @php
+           @endphp
          @foreach ($aboutus as $key=> $item)
         <tr>
             @php
               $value=json_decode($item->content,true);
+              
             @endphp
             <td>{{$key+1}}</td>
         <td>{{$value['name']}}</td>
@@ -61,6 +63,7 @@
         @else
         @endif
     </td>
+    <td><a href="{{route('aboutus.editDetail',$item->id)}}" class="btn btn-primary"><i class="fas fa-edit"></i>Edit</a></td>
      
             {{-- <td>
                 <a href="{{route('aboutus.edit',$values->id)}}" class="btn btn-primary"><i class="fas fa-edit"></i> Edit </a>

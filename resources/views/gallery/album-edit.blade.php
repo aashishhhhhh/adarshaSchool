@@ -1,5 +1,7 @@
 @extends('layouts.main')
 @section('is_active_gallery','active')
+@section('title', 'Edit Album')
+
 @section('main_content')
 <div class="card card-primary">
     <div class="card-header">

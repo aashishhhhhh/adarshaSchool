@@ -91,12 +91,10 @@
            @foreach ($albums as $key=> $item)
            @php
                $data=json_decode($item->content,true);
-            //    dd($data);
-            //    $date=$data[0]['date'];
            @endphp
           <tr>
           <td>{{$key+1}}</td>
-          {{-- <td>{{$data['title']}}</td> --}}
+          <td>{{$data['title']}}</td>
           {{-- <td>{{$data}}</td> --}}
           <td> <a href="{{route('showPhotos',$item->id)}}" class="btn btn-primary"> Show Photos </a>
            </td>

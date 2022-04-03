@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('is_active_notice','active')
+@section('title', ' Notice')
 @section('main_content')
 @livewire('notice-list', ['notice' => $notice])
 @endsection

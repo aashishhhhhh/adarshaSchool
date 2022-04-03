@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('is_active_pages','active')
-    
+@section('title', ' Page')
 @section('main_content')
 <div class="card text-sm " >
     @if (session()->has('msg'))

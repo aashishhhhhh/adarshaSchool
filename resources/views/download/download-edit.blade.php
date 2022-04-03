@@ -1,4 +1,5 @@
 @extends('layouts.main')
+@section('title', 'Edit Download')
 @section('is_active_download','active')
 @section('main_content')
 <div class="card card-primary">

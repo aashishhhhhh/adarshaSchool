@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('is_active_message','active')
+@section('title', 'Student')
 @section('main_content')
 <div class="card text-sm " >
     @if (session()->has('msg'))
@@ -10,7 +11,6 @@
         </button>
       </div>
       @endif
-    
     <div class="card">
         <div class="card-header">
             <div class="row my-1">

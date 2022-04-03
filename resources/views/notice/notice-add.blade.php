@@ -1,5 +1,7 @@
 @extends('layouts.main')
 @section('is_active_notice','active')
+@section('title', 'Add Notice')
+
 @section('main_content')
 <div class="card card-primary">
     <div class="card-header">

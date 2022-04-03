@@ -66,6 +66,8 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('addDetail',[AboutUsController::class,'storeDetail'])->name('aboutus-detail.store');
     Route::get('addDetail/{aboutus}',[AboutUsController::class,'addDetail'])->name('aboutus.addDetail');
     Route::get('showDetail/{aboutus}',[AboutUsController::class,'showDetail'])->name('aboutus.showDetail');
+    Route::get('editDetail/{aboutus}',[AboutUsController::class,'editDetail'])->name('aboutus.editDetail');
+    Route::post('aboutusDetailUpdate',[AboutUsController::class,'updateDetail'])->name('aboutus-detail.update');
     Route::post('aboutUsUpdate',[AboutUsController::class,'updatee'])->name('aboutus.updatee');
     Route::get('aboutUsEdit',[AboutUsController::class,'aboutUsEdit'])->name('aboutUs-edit');
     Route::resource('contactUs', ContactUsController::class)->only(['index','create','store','update','edit','destroy']);

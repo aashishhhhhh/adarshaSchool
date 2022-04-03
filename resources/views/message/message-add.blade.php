@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('is_active_message','active')
+@section('title', 'Add Message')
 @section('main_content')
 <div class="card card-primary">
     <div class="card-header">

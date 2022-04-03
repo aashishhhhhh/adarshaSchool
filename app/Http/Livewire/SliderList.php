@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Page;
 use App\Models\Picture;
 use Livewire\Component;
+use File;
 
 class SliderList extends Component
 {
@@ -22,8 +23,16 @@ class SliderList extends Component
 
     public function removeImage($value)
     {
-       Picture::query()->where('id',$value)->delete();
-       $this->msg='Slider deleted Sucessfully';
-       $this->render();
+        $picture=Picture::query()->where('id',$value)->first();
+        if (File::exists(public_path('storage/thumbnails/' . $picture->url))) {
+            File::delete(public_path('storage/thumbnails/' . $picture->url));
+            File::delete(public_path('storage/upload/' . $picture->url));
+            Picture::query()->where('id',$value)->delete();
+            $this->msg='Slider deleted Sucessfully';
+            $this->render();
+        }
+    //    Picture::query()->where('id',$value)->delete();
+    //    $this->msg='Slider deleted Sucessfully';
+    //    $this->render();
     }
 }

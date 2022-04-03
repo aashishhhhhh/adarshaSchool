@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('is_active_slider', 'active')
+@section('title', 'Edit Slider')
 @section('main_content')
     <div class="card text-sm ">
         <div class="card-header my-2">

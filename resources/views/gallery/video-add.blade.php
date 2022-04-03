@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('is_active_gallery','active')
+@section('title', ' Video Add')
 @section('main_content')
 <div class="card card-primary">
     <div class="card-header">

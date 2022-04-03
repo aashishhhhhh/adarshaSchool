@@ -11,6 +11,8 @@ use App\Models\Picture;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use File;
+use Illuminate\Support\Facades\DB;
 
 class AboutUsController extends Controller
 {
@@ -150,8 +152,53 @@ class AboutUsController extends Controller
 
     public function showDetail($aboutus)
     {
+        $id=$aboutus;
         $title=Page::find($aboutus)->title;
         $aboutus=Page::query()->where('page_id',$aboutus)->with('pictures')->get();
-        return view('about-us.show-detail',['aboutus'=>$aboutus,'title'=>$title]);
+        return view('about-us.show-detail',['aboutus'=>$aboutus,'title'=>$title,'id'=>$id]);
+    }
+
+    public function editDetail(Page $aboutus)
+    {   
+        $aboutus->load('pictures');
+        return view('about-us.edit-detail',['aboutus'=>$aboutus]);
+    }
+
+    public function updateDetail (Request $request,MediaHelper $mediaHelper)
+    {
+        $aboutus=Page::query()->where('id',$request->aboutUsId)->first()->load('pictures');
+        $data= $request->validate([
+            'name'=>'required',
+            'Designation'=>'required',
+        ]);
+        $data=array();
+        $data['name']=$request->name;
+        $data['Designation']=$request->Designation;
+        DB::transaction(function () use ($request, $mediaHelper,$aboutus) {
+
+       if ($request->hasFile('photo')) {
+          foreach ($aboutus->pictures as $key => $value) {
+              if (File::exists(public_path('storage/thumbnails/' . $value->url))) {
+            File::delete(public_path('storage/thumbnails/' . $value->url));
+            File::delete(public_path('storage/upload/' . $value->url));
+            }
+             $value->delete();
+             $imageName = $mediaHelper->uploadSingleImage($request->photo);
+             Picture::create([
+                'imageable_id' => $request->aboutUsId,
+                'imageable_type' => Page::NAMESPACE,
+                'url' => $imageName,
+                'is_banner'=>0
+            ]);
+          }
+       }
+    });
+       Page::query()->where('id',$request->aboutUsId)->update([
+        'slug'=>Str::slug($request->name),
+        'title'=>$request->name,
+        'content'=>json_encode($data),
+       ]);
+       return redirect()->route('aboutus.index')->with('msg','Detail Updated successfully');
+
     }
 }

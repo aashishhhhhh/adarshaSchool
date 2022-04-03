@@ -1,4 +1,6 @@
 @extends('layouts.main')
+@section('title','Add About Us')
+    
 @section('is_active_about_us','active')
 @section('main_content')
 <div class="card card-primary">
