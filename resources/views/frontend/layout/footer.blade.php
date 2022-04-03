@@ -21,6 +21,11 @@
                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 <a target="_blank" href="#"> doe.gov.np </a>
               </li>
+
+              <li>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                <a target="_blank" href="https://www.biratnagarmun.gov.np/en"> Biratnagar Metropolitan City </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -60,6 +65,14 @@
               Post Box
             </p>
           </div>
+          <div class="footer_body">
+            Visitor Count: <br />
+            <p>
+               <span> {{ App\Models\visitor::count() }} </span>
+ <br />
+            
+            </p>
+          </div>
           <div class="footer_body footer_social">
             <ul>
               <li>
@@ -77,6 +90,7 @@
                   <i class="fa-brands fa-instagram"></i>
                 </a>
               </li>
+              
             </ul>
           </div>
         </div>

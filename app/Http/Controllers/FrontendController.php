@@ -6,6 +6,7 @@ use App\Mail\feedback;
 use App\Models\Feedbacks;
 use App\Models\Page;
 use App\Models\PageType;
+use App\Models\visitor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -15,16 +16,10 @@ class FrontendController extends Controller
     public function home()
     {
         $pages = PageType::query()->with('pages.pictures','pages.Parents')->get();
-        // foreach ($pages as $key => $value) {
-        //    if ($value->title=='Slider') {
-        //       foreach ($value->pages as $key => $item) {
-        //          foreach ($item->pictures as $key => $value) {
-        //             dd($value);
-        //          }
-        //       }
-        //    }
-        // }
        
+        if (visitor::query()->where('ip', request()->ip())->count() == 0) {
+            visitor::create(['ip' => request()->ip()]);
+        }
 
         return view('frontend.frontend',['pages'=>$pages]); 
     }
