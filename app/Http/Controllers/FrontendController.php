@@ -24,7 +24,7 @@ class FrontendController extends Controller
         return view('frontend.frontend',['pages'=>$pages]); 
     }
 
-    public function generalNotice( $slug)
+    public function generalNotice($slug)
     {
         $pages = PageType::query()->with('pages.pictures','pages.Parents')->get();
         return view('frontend.general-notice',['pages'=>$pages]);
